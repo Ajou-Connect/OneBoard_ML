@@ -5,11 +5,9 @@
 
 
 from flask import Flask, render_template, Response, request, jsonify  ## flask 라이브러리에서 Flask import
-import numpy as np
 import imutils
 import cv2
 import dlib
-import json
 import datetime
 import time
 from imutils import face_utils
@@ -26,54 +24,49 @@ def eye_aspect_ratio(eye):
     ear = (A + B) / (2.0 * C)
     return ear
 
-
 @app.route('/', methods=['GET', 'POST'])
 def gen_frames():
-    MINIMUM_EAR = 210
-    MAXIMUM_FRAME_COUNT = 15
-    MAXIMUM_UNRECOGNIZED_COUNT = 15
+    MINIMUM_EAR = 300
+    MAXIMUM_FRAME_COUNT = 4
+    MAXIMUM_UNRECOGNIZED_COUNT = 20
     EYE_CLOSED_COUNTER = 0
     UNRECOGNIZED_COUNTER = 0
-    count = 0
     ts_list = []
+    type_list = []
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks_2.dat")
     (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
     (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
+
     vid_in = cv2.VideoCapture(0)
     # vid_in = cv2.VideoCapture("*.mp4"ㅡ)
-    # vid_in = cv2.VideoCapture(0, CAP_DSHOW)  #try different backend
     # while True:
-
     ### Test 용 while 문 ###
-    t_end = time.time() + 15
+    ### 10초동안만 영상 감지를함. ###
+    t_end = time.time() + 10
     while time.time() < t_end:
-        facedetection = {'timestamp': ts_list,
-                         'facedetection': count,
-                         }
     #######################
+        facedetection = {'detected_type': type_list,
+                         'timestamp': ts_list,
+                         }
 
         ret, image_o = vid_in.read()
         ts = datetime.datetime.now().timestamp()
+        date = datetime.datetime.fromtimestamp(int(ts)).strftime('%Y-%m-%d %H:%M:%S')
         image = imutils.resize(image_o, width=500)
         img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        # img_Gau = cv2.GaussianBlur(img_gry, (5, 5), 0)
         rects = detector(img_gray, 1)
 
         if len(rects) == 0 and UNRECOGNIZED_COUNTER < MAXIMUM_UNRECOGNIZED_COUNT:
             UNRECOGNIZED_COUNTER += 1
-            cv2.putText(image, "CANT FIND", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         else:
             UNRECOGNIZED_COUNTER = 0
 
         if UNRECOGNIZED_COUNTER >= MAXIMUM_UNRECOGNIZED_COUNT:
-            cv2.putText(image, "CAMERA!!", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
             EYE_CLOSED_COUNTER = 0
-            count += 1
-            ts_list.append(ts)
-            # facedetection = {'timestamp': ts,
-            #                  'facedetection': count}
-            # return jsonify(facedetection)
+            ts_list.append(date)
+            type_list.append("undetected")
+
         for rect in rects:
             shape = predictor(img_gray, rect)
             shape = face_utils.shape_to_np(shape)
@@ -95,22 +88,13 @@ def gen_frames():
             else:
                 EYE_CLOSED_COUNTER = 0
 
-            cv2.putText(image, "EAR: {}".format(round(both_ear, 1)), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                        (0, 0, 255), 2)
-
             if EYE_CLOSED_COUNTER >= MAXIMUM_FRAME_COUNT:
-                cv2.putText(image, "Drowsiness", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-                count += 1
-                ts_list.append(ts)
-                # facedetection = {'timestamp': ts,
-                #                  'facedetection': count}
+                ts_list.append(date)
+                type_list.append("Drowsiness")
+                EYE_CLOSED_COUNTER = 0
 
     return jsonify(facedetection)
 
-        # cv2.imshow('image', image)
-
-
-#    cv2.destroyAllWindows()
 if __name__ == "__main__":
     app.run(debug=True)
 
