@@ -27,9 +27,9 @@ def index():
     return Response(gen_frames(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def gen_frames():
-    MINIMUM_EAR = 210
+    MINIMUM_EAR = 240
     MAXIMUM_FRAME_COUNT = 30
-    MAXIMUM_UNRECOGNIZED_COUNT = 50
+    MAXIMUM_UNRECOGNIZED_COUNT = 60
     EYE_CLOSED_COUNTER = 0
     UNRECOGNIZED_COUNTER = 0
 
@@ -38,21 +38,20 @@ def gen_frames():
     (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
     (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
     vid_in = cv2.VideoCapture(0)
-    #vid_in = cv2.VideoCapture("*.mp4")
+
     while True:
-        ret, image_o = vid_in.read() 
-        image = imutils.resize(image_o, width = 500)
+        ret, image_o = vid_in.read()
+        image = imutils.resize(image_o, width = 1000)
         img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        #img_Gau = cv2.GaussianBlur(img_gry, (5, 5), 0)
-        rects = detector(img_gray,1)
+        rects = detector(img_gray,0)
 
         if len(rects) == 0:
             UNRECOGNIZED_COUNTER += 1
-            cv2.putText(image, "CANT FIND", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+            #cv2.putText(image, "CANT FIND", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         else:
             UNRECOGNIZED_COUNTER = 0
 
-        if UNRECOGNIZED_COUNTER >= MAXIMUM_UNRECOGNIZED_COUNT: 
+        if UNRECOGNIZED_COUNTER >= MAXIMUM_UNRECOGNIZED_COUNT:
             cv2.putText(image, "CAMERA!!", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
 
 
@@ -81,8 +80,6 @@ def gen_frames():
 
             if EYE_CLOSED_COUNTER >= MAXIMUM_FRAME_COUNT:
                 cv2.putText(image, "Drowsiness", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-
-        #cv2.imshow('image', image)
 
         key = cv2.waitKey(1)
         #esc,
