@@ -1,0 +1,10 @@
+### ipynb files ####
+*.ipynb
+
+#####
+
+test/
+
+#####
+
+zoom.py
