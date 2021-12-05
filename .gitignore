@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### ipynb files ####
 *.ipynb
 
@@ -7,4 +8,15 @@ test/
 
 #####
 
+=======
+### ipynb files ####
+*.ipynb
+
+#####
+
+test/
+
+#####
+
+>>>>>>> 5d633839a26f2c99044c3849368c33a6b11038d7
 zoom.py
