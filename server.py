@@ -21,7 +21,7 @@ predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks_2.dat")
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 
-ip = 'localhost'  # ip 주소  # 스프링서버 115.85.182.194
+ip = '115.85.182.194'  # ip 주소  # 스프링서버 115.85.182.194
 port = 20001  # port 번호  # 스프링서버 포트 8080
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((ip, port))
