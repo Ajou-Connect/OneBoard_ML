@@ -8,6 +8,7 @@ import dlib
 from imutils import face_utils
 from scipy.spatial import distance as dist
 
+
 MINIMUM_EAR = 250
 MAXIMUM_FRAME_COUNT = 30
 MAXIMUM_UNRECOGNIZED_COUNT = 50
@@ -22,20 +23,17 @@ predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks_2.dat")
 while True:
     ip = 'localhost'  # ip 주소  # 스프링서버 115.85.182.194
     port = 20001  # port 번호  # 스프링서버 포트 8080
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # 소켓 객체를 생성
-    s.bind((ip, port))  # 바인드(bind) : 소켓에 주소, 프로토콜, 포트를 할당
-    s.listen(10)  # 연결 수신 대기 상태(리스닝 수(동시 접속) 설정)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind((ip, port))
+    s.listen(10)
     print('클라이언트 연결 대기')
 
-    # 소켓 객체를 생성 및 연결
-    # 연결 수락(클라이언트 소켓 주소를 반환)
     conn, addr = s.accept()
-    print(addr)  # 클라이언트 주소 출력
+    print(addr)
 
-    data = b""  # 수신한 데이터를 넣을 변수
+    data = b""
     payload_size = struct.calcsize(">L")
-    # binder함수는 서버에서 accept가 되면 생성되는 socket 인스턴스를 통해 client로 부터 데이터를 받으면 echo형태로 재송신하는 메소드이다.
-    # 커넥션이 되면 접속 주소가 나온다.
+
     print('Connected by', addr)
 
     javaip = 'localhost' # ip 주소
@@ -127,17 +125,12 @@ while True:
             # 영상 출력
             # cv2.imshow('TCP_Frame_Socket', image)
 
-            # 1초 마다 키 입력 상태를 받음
             if cv2.waitKey(1) == ord('q'):  # q를 입력하면 종료
                 break
     except Exception as e:
-        # 접속이 끊기면 except가 발생한다.
         print("except : ", addr)
         print(str(e))
     finally:
         s.close()
         server_socket.close()
-        ############ 로컬에서 종료하기 위해서 ####
-        # a = input("종료할거면 q\n")
-        # if a == 'q':
-        #     break
+
