@@ -4,7 +4,7 @@ import struct
 import pickle
 import time
 import threading
-
+import winsound as sd
 def Send(socket):
     while True:
         ret, frame = camera.read()  # 카메라 프레임 읽기
@@ -26,12 +26,16 @@ def Recv(socket):
         # 데이터 길이를 받는다.
         get_data = socket.recv(length)
         # 데이터를 수신한다.
-        # msg = get_data.decode()
+        msg = get_data.decode()
         # 데이터를 출력한다
-        tm = time.localtime(time.time())
-        string = time.strftime('%Y-%m-%d %I:%M:%S %p', tm)
-        print('Received time: ' + string + '     info' + repr(get_data.decode()))
-        # print('Received from : ', msg)
+        print('Received from : ', msg)
+        if msg == 'alarm':
+            beepsound()
+
+def beepsound():
+    fr = 2000  # range : 37 ~ 32767
+    du = 1000  # 1000 ms ==1second
+    sd.Beep(fr, du)  # winsound.Beep(frequency, duration)
 
 ip = 'localhost' # ip 주소
 port = 20001 # port 번호

@@ -85,7 +85,7 @@ while True:
 
             if UNRECOGNIZED_COUNTER >= MAXIMUM_UNRECOGNIZED_COUNT:
                 UNRECOGNIZED_COUNTER = 0
-                send_msg('딴짓감지')
+                send_msg('alarm')
                 print(" 딴짓감지 ")
                 msg = '딴짓 감지'
                 testmsg = msg.encode()
@@ -118,14 +118,14 @@ while True:
                 if EYE_CLOSED_COUNTER >= MAXIMUM_FRAME_COUNT:
                     EYE_CLOSED_COUNTER = 0
                     print("졸음감지")
-                    send_msg("sleep")
+                    send_msg("alarm")
                     msg = '졸음 감지'
                     testmsg = msg.encode()
                     length = len(testmsg)
                     server_socket.sendall(length.to_bytes(4, byteorder="little"))
                     server_socket.sendall(testmsg)
             # 영상 출력
-            cv2.imshow('TCP_Frame_Socket', image)
+            # cv2.imshow('TCP_Frame_Socket', image)
 
             # 1초 마다 키 입력 상태를 받음
             if cv2.waitKey(1) == ord('q'):  # q를 입력하면 종료
@@ -137,6 +137,7 @@ while True:
     finally:
         s.close()
         server_socket.close()
-        a = input("종료할거면 q\n")
-        if a == 'q':
-            break
+        ############ 로컬에서 종료하기 위해서 ####
+        # a = input("종료할거면 q\n")
+        # if a == 'q':
+        #     break
