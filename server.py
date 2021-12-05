@@ -22,7 +22,7 @@ predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks_2.dat")
 
 
 ip = '115.85.182.194'  # ip 주소  # 스프링서버 115.85.182.194
-port = 20001  # port 번호  # 스프링서버 포트 8080
+port = 8500  # port 번호  # 스프링서버 포트 8080
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((ip, port))
 s.listen(10)
@@ -37,7 +37,7 @@ payload_size = struct.calcsize(">L")
 print('Connected by', addr)
 
 javaip = 'localhost' # ip 주소
-javaport = 20002 # port 번호
+javaport = 8600 # port 번호
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.connect((javaip, javaport))
 
