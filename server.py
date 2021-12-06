@@ -106,8 +106,8 @@ try:
             # rightEyeHull = cv2.convexHull(rightEye)
             # cv2.drawContours(image, [leftEyeHull], -1, (255, 0, 0), 2)
             # cv2.drawContours(image, [rightEyeHull], -1, (255, 0, 0), 2)
-            cv2.putText(image, "EAR: {}".format(round(both_ear, 1)), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                        (0, 0, 255), 2)
+            # cv2.putText(image, "EAR: {}".format(round(both_ear, 1)), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+            #             (0, 0, 255), 2)
             if both_ear < MINIMUM_EAR:
                 EYE_CLOSED_COUNTER += 1
             else:
@@ -122,7 +122,7 @@ try:
                 server_socket.sendall(length.to_bytes(4, byteorder="little"))
                 server_socket.sendall(testmsg)
         # 영상 출력
-        cv2.imshow('TCP_Frame_Socket', image)
+        # cv2.imshow('TCP_Frame_Socket', image)
 
         if cv2.waitKey(1) == ord('q'):  # q를 입력하면 종료
             break
