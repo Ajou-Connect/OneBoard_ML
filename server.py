@@ -85,11 +85,11 @@ try:
         if UNRECOGNIZED_COUNTER >= MAXIMUM_UNRECOGNIZED_COUNT:
             UNRECOGNIZED_COUNTER = 0
             send_msg('alarm')
-            msg = '딴짓 감지'
-            testmsg = msg.encode()
-            length = len(testmsg)
-            server_socket.sendall(length.to_bytes(4, byteorder="little"))
-            server_socket.sendall(testmsg)
+            # msg = '딴짓 감지'
+            # testmsg = msg.encode()
+            # length = len(testmsg)
+            # server_socket.sendall(length.to_bytes(4, byteorder="little"))
+            # server_socket.sendall(testmsg)
 
         for rect in rects:
             shape = predictor(img_gray, rect)
@@ -116,16 +116,16 @@ try:
             if EYE_CLOSED_COUNTER >= MAXIMUM_FRAME_COUNT:
                 EYE_CLOSED_COUNTER = 0
                 send_msg("alarm")
-                msg = '졸음 감지'
-                testmsg = msg.encode()
-                length = len(testmsg)
-                server_socket.sendall(length.to_bytes(4, byteorder="little"))
-                server_socket.sendall(testmsg)
+                # msg = '졸음 감지'
+                # testmsg = msg.encode()
+                # length = len(testmsg)
+                # server_socket.sendall(length.to_bytes(4, byteorder="little"))
+                # server_socket.sendall(testmsg)
         # 영상 출력
         # cv2.imshow('TCP_Frame_Socket', image)
 
-        if cv2.waitKey(1) == ord('q'):  # q를 입력하면 종료
-            break
+        # if cv2.waitKey(1) == ord('q'):  # q를 입력하면 종료
+        #     break
 except Exception as e:
     print("except : ", addr)
     print(str(e))
