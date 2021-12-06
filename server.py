@@ -22,6 +22,23 @@ predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks_2.dat")
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
+
+def send_msg(msg):
+    data = msg.encode()
+    length = len(data)
+    conn.sendall(length.to_bytes(4, byteorder="little"))
+    conn.sendall(data)
+
+
+def eye_aspect_ratio(eye):
+    A = dist.euclidean(eye[1], eye[5])
+    B = dist.euclidean(eye[2], eye[4])
+    C = dist.euclidean(eye[0], eye[3])
+
+    ear = (A + B) / (2.0 * C)
+    return ear
+
+
 while True:
     ip = '0.0.0.0'  # ip 주소  # 스프링서버 115.85.182.194
     port = 8090  # port 번호  # 스프링서버 포트 8080
@@ -46,20 +63,6 @@ while True:
     print(" java 서버와 연결 완료 \n\n\n")
 
     print(" ---------------서버 입니다 ----------------\n\n\n")
-    def send_msg(msg):
-        data = msg.encode()
-        length = len(data)
-        conn.sendall(length.to_bytes(4, byteorder="little"))
-        conn.sendall(data)
-
-    def eye_aspect_ratio(eye):
-        A = dist.euclidean(eye[1], eye[5])
-        B = dist.euclidean(eye[2], eye[4])
-        C = dist.euclidean(eye[0], eye[3])
-
-        ear = (A + B) / (2.0 * C)
-        return ear
-
 
     try:
         while True:
