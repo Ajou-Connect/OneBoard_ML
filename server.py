@@ -38,15 +38,15 @@ def eye_aspect_ratio(eye):
     ear = (A + B) / (2.0 * C)
     return ear
 
+ip = '0.0.0.0'  # ip 주소  # 스프링서버 115.85.182.194
+port = 8090  # port 번호  # 스프링서버 포트 8080
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((ip, port))
+s.listen(10)
+
 
 while True:
-    ip = '0.0.0.0'  # ip 주소  # 스프링서버 115.85.182.194
-    port = 8090  # port 번호  # 스프링서버 포트 8080
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((ip, port))
-    s.listen(10)
     print('클라이언트 연결 대기')
-
     conn, addr = s.accept()
     print(addr)
 
