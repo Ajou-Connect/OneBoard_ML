@@ -36,7 +36,7 @@ payload_size = struct.calcsize(">L")
 
 print('Connected by', addr)
 
-javaip = 'localhost' # ip 주소
+javaip = '115.85.182.194' # ip 주소
 javaport = 8080 # port 번호
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.connect((javaip, javaport))
