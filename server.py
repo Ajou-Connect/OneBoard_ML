@@ -6,6 +6,7 @@ import imutils
 import cv2
 import dlib
 import time
+import datetime
 from imutils import face_utils
 from scipy.spatial import distance as dist
 
@@ -139,5 +140,5 @@ except Exception as e:
     print(str(e))
 finally:
     s.close()
-    server_socket.close()
+    # server_socket.close()
 
