@@ -31,13 +31,14 @@ def beepsound():
     du = 1000
     sd.Beep(fr, du)
 
-ip = '115.85.182.194' # ip 주소
+ip = 'localhost' # ip 주소
 port = 8500 # port 번호
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((ip, port))
 print('연결 성공')
 
+print("----------클라이언트 입니다 ------------------")
 camera = cv2.VideoCapture(0)
 
 camera.set(cv2.CAP_PROP_FRAME_WIDTH, 200)

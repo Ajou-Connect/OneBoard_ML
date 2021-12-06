@@ -9,7 +9,7 @@ from imutils import face_utils
 from scipy.spatial import distance as dist
 
 
-MINIMUM_EAR = 250
+MINIMUM_EAR = 310
 MAXIMUM_FRAME_COUNT = 30
 MAXIMUM_UNRECOGNIZED_COUNT = 50
 EYE_CLOSED_COUNTER = 0
@@ -22,7 +22,7 @@ predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks_2.dat")
 
 
 ip = '115.85.182.194'  # ip 주소  # 스프링서버 115.85.182.194
-port = 8500  # port 번호  # 스프링서버 포트 8080
+port = 8090  # port 번호  # 스프링서버 포트 8080
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((ip, port))
 s.listen(10)
@@ -36,13 +36,14 @@ payload_size = struct.calcsize(">L")
 
 print('Connected by', addr)
 
-# javaip = 'localhost' # ip 주소
-# javaport = 8600 # port 번호
-# server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# server_socket.connect((javaip, javaport))
-#
-# print(" java 서버와 연결 완료 ")
+javaip = 'localhost' # ip 주소
+javaport = 8080 # port 번호
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.connect((javaip, javaport))
 
+print(" java 서버와 연결 완료 ")
+
+print(" ---------------서버 입니다 ----------------")
 def send_msg(msg):
     data = msg.encode()
     length = len(data)
@@ -84,12 +85,11 @@ try:
         if UNRECOGNIZED_COUNTER >= MAXIMUM_UNRECOGNIZED_COUNT:
             UNRECOGNIZED_COUNTER = 0
             send_msg('alarm')
-            print(" 딴짓감지 ")
-            # msg = '딴짓 감지'
-            # testmsg = msg.encode()
-            # length = len(testmsg)
-            # server_socket.sendall(length.to_bytes(4, byteorder="little"))
-            # server_socket.sendall(testmsg)
+            msg = '딴짓 감지'
+            testmsg = msg.encode()
+            length = len(testmsg)
+            server_socket.sendall(length.to_bytes(4, byteorder="little"))
+            server_socket.sendall(testmsg)
 
         for rect in rects:
             shape = predictor(img_gray, rect)
@@ -115,15 +115,14 @@ try:
 
             if EYE_CLOSED_COUNTER >= MAXIMUM_FRAME_COUNT:
                 EYE_CLOSED_COUNTER = 0
-                print("졸음감지")
                 send_msg("alarm")
-                # msg = '졸음 감지'
-                # testmsg = msg.encode()
-                # length = len(testmsg)
-                # server_socket.sendall(length.to_bytes(4, byteorder="little"))
-                # server_socket.sendall(testmsg)
+                msg = '졸음 감지'
+                testmsg = msg.encode()
+                length = len(testmsg)
+                server_socket.sendall(length.to_bytes(4, byteorder="little"))
+                server_socket.sendall(testmsg)
         # 영상 출력
-        # cv2.imshow('TCP_Frame_Socket', image)
+        cv2.imshow('TCP_Frame_Socket', image)
 
         if cv2.waitKey(1) == ord('q'):  # q를 입력하면 종료
             break
