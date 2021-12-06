@@ -2,7 +2,6 @@ import cv2
 import socket
 import struct
 import pickle
-import time
 import threading
 import winsound as sd
 

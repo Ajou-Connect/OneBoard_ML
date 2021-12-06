@@ -5,6 +5,7 @@ import struct
 import imutils
 import cv2
 import dlib
+import time
 from imutils import face_utils
 from scipy.spatial import distance as dist
 
@@ -36,12 +37,12 @@ payload_size = struct.calcsize(">L")
 
 print('Connected by', addr)
 
-javaip = '115.85.182.194' # ip 주소
-javaport = 8080 # port 번호
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.connect((javaip, javaport))
-
-print(" java 서버와 연결 완료 ")
+# javaip = '115.85.182.194' # ip 주소
+# javaport = 8080 # port 번호
+# server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# server_socket.connect((javaip, javaport))
+#
+# print(" java 서버와 연결 완료 ")
 
 print(" ---------------서버 입니다 ----------------")
 def send_msg(msg):
@@ -57,6 +58,7 @@ def eye_aspect_ratio(eye):
 
     ear = (A + B) / (2.0 * C)
     return ear
+
 
 try:
     while True:
@@ -85,7 +87,10 @@ try:
         if UNRECOGNIZED_COUNTER >= MAXIMUM_UNRECOGNIZED_COUNT:
             UNRECOGNIZED_COUNTER = 0
             send_msg('alarm')
-            # msg = '딴짓 감지'
+            now = datetime.datetime.now()
+            nowTime = now.strftime('%H:%M:%S')
+            print(nowTime)
+            # msg = '딴짓 감지 ' + nowTime
             # testmsg = msg.encode()
             # length = len(testmsg)
             # server_socket.sendall(length.to_bytes(4, byteorder="little"))
@@ -116,6 +121,9 @@ try:
             if EYE_CLOSED_COUNTER >= MAXIMUM_FRAME_COUNT:
                 EYE_CLOSED_COUNTER = 0
                 send_msg("alarm")
+                now = datetime.datetime.now()
+                nowTime = now.strftime('%H:%M:%S')
+                print(nowTime)
                 # msg = '졸음 감지'
                 # testmsg = msg.encode()
                 # length = len(testmsg)
