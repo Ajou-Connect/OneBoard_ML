@@ -23,7 +23,9 @@ predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks_2.dat")
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 
-print(" 꺼지지 않게 하려면 nohup python server.py& 로 실행해야함")
+print(" \n꺼지지 않게 하려면 nohup python server.py& 로 실행해야함")
+print(" \n종료하려면 ps -ef | grep server.py 후 kill pid 로 종료\n")
+
 
 def send_msg(msg):
     data = msg.encode()

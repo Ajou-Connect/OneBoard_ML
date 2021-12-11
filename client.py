@@ -2,6 +2,7 @@ import cv2
 import socket
 import struct
 import pickle
+import time
 import threading
 import winsound as sd
 
@@ -38,6 +39,7 @@ client_socket.connect((ip, port))
 print('연결 성공')
 
 print("----------클라이언트 입니다 ------------------")
+
 camera = cv2.VideoCapture(0)
 
 camera.set(cv2.CAP_PROP_FRAME_WIDTH, 200)
