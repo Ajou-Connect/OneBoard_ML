@@ -23,6 +23,8 @@ predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks_2.dat")
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 
+print(" 꺼지지 않게 하려면 nohup python server.py& 로 실행해야함")
+
 def send_msg(msg):
     data = msg.encode()
     length = len(data)
@@ -140,6 +142,7 @@ while True:
         print("except : ", addr)
         print(str(e))
     finally:
+        print(" 연결 종료 !! ")
         s.close()
         server_socket.close()
 
