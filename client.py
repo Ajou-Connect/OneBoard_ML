@@ -30,7 +30,7 @@ def beepsound():
     du = 1000
     sd.Beep(fr, du)
 
-ip = '115.85.182.194' # ip 주소
+ip = '115.85.182.194' # ip 주소 115.85.182.194
 port = 8090 # port 번호
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

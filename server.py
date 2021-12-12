@@ -7,6 +7,7 @@ import cv2
 import dlib
 import time
 import datetime
+import threading
 from imutils import face_utils
 from scipy.spatial import distance as dist
 
@@ -45,7 +46,6 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((ip, port))
 s.listen(10)
 
-
 print('클라이언트 연결 대기\n')
 conn, addr = s.accept()
 print(addr)
@@ -60,6 +60,12 @@ print('Connected by', addr)
 # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # server_socket.connect((javaip, javaport))
 # print(" java 서버와 연결 완료 \n\n\n")
+
+javaip = '200.200.5.1' # ip 주소
+javaport = 8080 # port 번호
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.connect((javaip, javaport))
+print(" java 서버와 연결 완료 \n\n\n")
 
 print(" ---------------서버 입니다 ----------------\n")
 
