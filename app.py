@@ -55,21 +55,12 @@ def gen_frames():
     camera.set(cv2.CAP_PROP_FRAME_WIDTH, 200)
     camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 200)
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
-    while True:
-        ret, image_o = camera.read()
-        ret, buffer = cv2.imencode('.jpg', image_o, encode_param)
-        data = pickle.dumps(buffer, 0)
-        size = len(data)
-        socket.sendall(struct.pack(">L", size) + data)
 
-        frame = buffer.bytescode()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-    # t1 = threading.Thread(target=Send, args= (client_socket, camera, encode_param))
-    # t2 = threading.Thread(target=Recv, args= (client_socket,))
-    # # t2.daemon = True
-    # t2.start()
-    # t1.start()
+    t1 = threading.Thread(target=Send, args= (client_socket, camera, encode_param))
+    t2 = threading.Thread(target=Recv, args= (client_socket,))
+    # t2.daemon = True
+    t2.start()
+    t1.start()
 
 if __name__ == "__main__":
     app.run(host = '0.0.0.0', port = 8100, debug=False, threaded=True)
