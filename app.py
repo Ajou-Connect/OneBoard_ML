@@ -6,20 +6,19 @@ import pickle
 import struct
 import winsound as sd
 import threading
+mport pygame
 
 app = Flask(__name__)
-
+pygame.init()
 
 @app.route('/')
 def index():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-def beepsound():
-    fr = 2000
-    du = 1000
-    sd.Beep(fr, du)
-
+def sound():
+    soundObj = pygame.mixer.Sound('beep.wav')  # 사운드 파일을 로딩한다
+    soundObj.play()
 
 def Recv(socket):
     while True:
@@ -29,7 +28,7 @@ def Recv(socket):
         msg = get_data.decode()
         print('Received from : ', msg)
         if msg == 'alarm':
-            beepsound()
+            sound()
 
 def Send(socket, camera, encode_param):
     while True:
