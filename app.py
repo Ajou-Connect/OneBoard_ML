@@ -46,7 +46,7 @@ def Send(socket, camera, encode_param):
 def gen_frames():
     ip = '115.85.182.194'  # ip 주소 115.85.182.194
     port = 8090  # port
-    camera = cv2.VideoCapture(2)
+    camera = cv2.VideoCapture(-1)
     print(camera)
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((ip, port))
