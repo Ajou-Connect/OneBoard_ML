@@ -10,6 +10,11 @@ import pygame
 app = Flask(__name__)
 pygame.init()
 
+@app.route('/')
+def home():
+    return 'hello this is ML page'
+
+
 @app.route('/facedetection')
 def index():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
