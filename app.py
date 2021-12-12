@@ -35,6 +35,7 @@ def Recv(socket):
             sound()
 
 def Send(socket, camera, encode_param):
+    print(camera)
     while True:
         ret, image_o = camera.read()
         ret, buffer = cv2.imencode('.jpg', image_o, encode_param)
@@ -45,7 +46,8 @@ def Send(socket, camera, encode_param):
 def gen_frames():
     ip = '115.85.182.194'  # ip 주소 115.85.182.194
     port = 8090  # port
-    camera = cv2.VideoCapture(2)
+    camera = cv2.VideoCapture(0)
+    print(camera)
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((ip, port))
 
