@@ -42,18 +42,10 @@ def Send(socket, camera, encode_param):
         size = len(data)
         socket.sendall(struct.pack(">L", size) + data)
 
-def Show():
-    while True:
-        ret, image_o = camera.read()
-        ret, buffer = cv2.imencode('.jpg', image_o, encode_param)
-        frame = buffer.tobytes()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
 def gen_frames():
     ip = '115.85.182.194'  # ip 주소 115.85.182.194
     port = 8090  # port
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(-1)
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((ip, port))
 
@@ -63,15 +55,10 @@ def gen_frames():
 
     t1 = threading.Thread(target=Send, args= (client_socket, camera, encode_param))
     t2 = threading.Thread(target=Recv, args= (client_socket,))
-    # t3 = threading.Thread(target=Show, args= ())
     t1.daemon = True
     t2.daemon = True
-    # t3.daemon = True
     t2.start()
     t1.start()
-    # t3.start()
-    # yield (b'--frame\r\n'
-    #        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 if __name__ == "__main__":
     app.run(host = '0.0.0.0', port = 8100, debug=False, threaded=True)
