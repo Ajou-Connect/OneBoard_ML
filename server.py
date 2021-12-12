@@ -60,13 +60,13 @@ while True:
 
     print('Connected by', addr)
     #
-    # javaip = '115.85.182.194' # ip 주소
-    # javaport = 8080 # port 번호
-    # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # server_socket.connect((javaip, javaport))
-    # print(" java 서버와 연결 완료 \n\n\n")
+    javaip = '115.85.182.194' # ip 주소
+    javaport = 8080 # port 번호
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.connect((javaip, javaport))
+    print(" java 서버와 연결 완료 \n\n\n")
 
-    # print(" 연결 완료 ! \n")
+    print(" 연결 완료 ! \n")
     print(" ---------------서버 입니다 ----------------\n")
     try:
         while True:
@@ -97,11 +97,11 @@ while True:
                 now = datetime.datetime.now()
                 nowTime = now.strftime('%H:%M:%S')
                 print(nowTime)
-                # msg = '딴짓 감지 ' + nowTime
-                # testmsg = msg.encode()
-                # length = len(testmsg)
-                # server_socket.sendall(length.to_bytes(4, byteorder="little"))
-                # server_socket.sendall(testmsg)
+                msg = '딴짓 감지 ' + nowTime
+                testmsg = msg.encode()
+                length = len(testmsg)
+                server_socket.sendall(length.to_bytes(4, byteorder="little"))
+                server_socket.sendall(testmsg)
 
             for rect in rects:
                 shape = predictor(img_gray, rect)
@@ -131,11 +131,11 @@ while True:
                     now = datetime.datetime.now()
                     nowTime = now.strftime('%H:%M:%S')
                     print(nowTime)
-                    # msg = '졸음 감지' + nowTime
-                    # testmsg = msg.encode()
-                    # length = len(testmsg)
-                    # server_socket.sendall(length.to_bytes(4, byteorder="little"))
-                    # server_socket.sendall(testmsg)
+                    msg = '졸음 감지' + nowTime
+                    testmsg = msg.encode()
+                    length = len(testmsg)
+                    server_socket.sendall(length.to_bytes(4, byteorder="little"))
+                    server_socket.sendall(testmsg)
             # 영상 출력
             # cv2.imshow('TCP_Frame_Socket', image)
 
