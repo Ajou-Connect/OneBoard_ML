@@ -4,14 +4,13 @@ import cv2
 import socket
 import pickle
 import struct
-import winsound as sd
 import threading
 import pygame
 
 app = Flask(__name__)
 pygame.init()
 
-@app.route('/')
+@app.route('/facedetection')
 def index():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
