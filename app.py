@@ -57,7 +57,6 @@ def gen_frames():
 
     t1 = threading.Thread(target=Send, args= (client_socket, camera, encode_param))
     t2 = threading.Thread(target=Recv, args= (client_socket,))
-    t1.daemon = True
     t2.daemon = True
     t2.start()
     t1.start()
