@@ -65,12 +65,12 @@ while True:
     # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # server_socket.connect((javaip, javaport))
     # print(" java 서버와 연결 완료 \n\n\n")
-    javaip = '200.200.5.1' # ip 주소
-    javaport = 8080 # port 번호
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.connect((javaip, javaport))
-    print(" java 서버와 연결 완료 \n\n\n")
-    print(" 연결 완료 ! \n")
+    # javaip = '115.85.182.194' # ip 주소
+    # javaport = 8080 # port 번호
+    # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # server_socket.connect((javaip, javaport))
+    # print(" java 서버와 연결 완료 \n\n\n")
+    # print(" 연결 완료 ! \n")
     print(" ---------------서버 입니다 ----------------\n")
     try:
         while True:
