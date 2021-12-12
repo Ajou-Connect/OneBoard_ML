@@ -6,7 +6,7 @@ import pickle
 import struct
 import winsound as sd
 import threading
-mport pygame
+import pygame
 
 app = Flask(__name__)
 pygame.init()
