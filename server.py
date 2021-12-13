@@ -64,7 +64,7 @@ while True:
     javaport = 8080 # port 번호
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.connect((javaip, javaport))
-    print(" java 서버 포트번호" + port +"와 연결 완료 \n\n\n")
+    print(" java 서버 포트번호 8080 와 연결 완료 \n\n\n")
 
     print(" 연결 완료 ! \n")
     print(" ---------------서버 입니다 ----------------\n")
