@@ -44,8 +44,8 @@ def eye_aspect_ratio(eye):
     return ear
 
 while True:
-    ip = '0.0.0.0'  # ip 주소  # 스프링서버 115.85.182.194
-    port = 8090  # port 번호  # 스프링서버 포트 8080
+    ip = '0.0.0.0'
+    port = 8090
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((ip, port))
     s.listen(10)
@@ -58,13 +58,13 @@ while True:
     payload_size = struct.calcsize(">L")
 
     print('Connected by', addr)
-    #
-    print(" 자바 서버와 연결하는 코드는 현재 주석처리중 ")
-    # javaip = '115.85.182.194' # ip 주소
-    # javaport = 8080 # port 번호
-    # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # server_socket.connect((javaip, javaport))
-    # print(" java 서버와 연결 완료 \n\n\n")
+    
+    # print(" 자바 서버와 연결하는 코드는 현재 주석처리중 ")
+    javaip = '115.85.182.194' # ip 주소
+    javaport = 8080 # port 번호
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.connect((javaip, javaport))
+    print(" java 서버와 연결 완료 \n\n\n")
 
     print(" 연결 완료 ! \n")
     print(" ---------------서버 입니다 ----------------\n")
@@ -97,11 +97,14 @@ while True:
                 now = datetime.datetime.now()
                 nowTime = now.strftime('%H:%M:%S')
                 print(nowTime)
-                # msg = '딴짓 감지 ' + nowTime
-                # testmsg = msg.encode()
-                # length = len(testmsg)
-                # server_socket.sendall(length.to_bytes(4, byteorder="little"))
-                # server_socket.sendall(testmsg)
+                try:
+                    msg = '딴짓 감지 ' + nowTime
+                    testmsg = msg.encode()
+                    length = len(testmsg)
+                    server_socket.sendall(length.to_bytes(4, byteorder="little"))
+                    server_socket.sendall(testmsg)
+                except:
+                    print("java 에 데이터를 보내는것에서 오류")
 
             for rect in rects:
                 shape = predictor(img_gray, rect)
@@ -113,13 +116,7 @@ while True:
                 rightEAR = eye_aspect_ratio(rightEye)
 
                 both_ear = (leftEAR + rightEAR) * 500
-                # 보여주기용
-                # leftEyeHull = cv2.convexHull(leftEye)
-                # rightEyeHull = cv2.convexHull(rightEye)
-                # cv2.drawContours(image, [leftEyeHull], -1, (255, 0, 0), 2)
-                # cv2.drawContours(image, [rightEyeHull], -1, (255, 0, 0), 2)
-                # cv2.putText(image, "EAR: {}".format(round(both_ear, 1)), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                #             (0, 0, 255), 2)
+
                 if both_ear < MINIMUM_EAR:
                     EYE_CLOSED_COUNTER += 1
                 else:
@@ -131,16 +128,15 @@ while True:
                     now = datetime.datetime.now()
                     nowTime = now.strftime('%H:%M:%S')
                     print(nowTime)
-                    # msg = '졸음 감지' + nowTime
-                    # testmsg = msg.encode()
-                    # length = len(testmsg)
-                    # server_socket.sendall(length.to_bytes(4, byteorder="little"))
-                    # server_socket.sendall(testmsg)
-            # 영상 출력
-            # cv2.imshow('TCP_Frame_Socket', image)
+                    try:
+                        msg = '딴짓 감지 ' + nowTime
+                        testmsg = msg.encode()
+                        length = len(testmsg)
+                        server_socket.sendall(length.to_bytes(4, byteorder="little"))
+                        server_socket.sendall(testmsg)
+                    except:
+                        print("java 에 데이터를 보내는것에서 오류")
 
-            # if cv2.waitKey(1) == ord('q'):  # q를 입력하면 종료
-            #     break
     except Exception as e:
         print("except : ", addr)
         print(str(e))
