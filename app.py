@@ -62,6 +62,6 @@ def gen_frames():
     t1.start()
 
 if __name__ == "__main__":
-    # app.run(host = '0.0.0.0', port = 8100, debug=False, threaded=True)
-    app.run(debug=True, threaded=True)
+    app.run(host = '0.0.0.0', port = 8100, debug=False, threaded=True)
+    # app.run(debug=True, threaded=True)
 # In[ ]:
