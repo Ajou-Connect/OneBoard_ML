@@ -1,4 +1,4 @@
-from flask import Flask, Response, request, render_template, flash  ## flask 라이브러리에서 Flask import
+from flask import Flask, Response, request, render_template, flash
 import imutils
 import cv2
 import socket
@@ -14,11 +14,9 @@ pygame.init()
 def index():
     return render_template('index.html')
 
-
 @app.route('/facedetection')
 def facedetection():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 def sound():
     soundObj = pygame.mixer.Sound('beep.wav')  # 사운드 파일을 로딩한다
@@ -32,12 +30,9 @@ def Recv(socket):
         msg = get_data.decode()
         print('Received from : ', msg)
         if msg == 'alarm':
-            # flash("test")
             sound()
-            # return render_template("index.html")
 
 def Send(socket, camera, encode_param):
-    print(camera)
     while True:
         ret, image_o = camera.read()
         ret, buffer = cv2.imencode('.jpg', image_o, encode_param)

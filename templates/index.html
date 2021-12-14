@@ -1,17 +1,9 @@
-  {%with messages = get_flashed_messages()%}
-  {%if messages %}
-    <script type="text/javascript">
-      alert("{{messages[-1]}}");
-    </script>
-    {%endif%}
-  {%endwith%}
-
 <!DOCTYPE html>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-lg-8  offset-lg-2">
-            <h3 class="mt-5">Live Streaming</h3>
+            <h3 class="mt-5">Sleep detection</h3>
             <img src="{{ url_for('facedetection') }}" width="100%">
         </div>
     </div>

@@ -57,8 +57,6 @@ while True:
     data = b""
     payload_size = struct.calcsize(">L")
 
-    print('Connected by', addr)
-    
     # print(" 자바 서버와 연결하는 코드는 현재 주석처리중 ")
     javaip = '115.85.182.194' # ip 주소
     javaport = 8080 # port 번호
@@ -67,7 +65,6 @@ while True:
     print(" java 서버 포트번호 8080 와 연결 완료 \n\n\n")
 
     print(" 연결 완료 ! \n")
-    print(" ---------------서버 입니다 ----------------\n")
     try:
         while True:
             # 프레임 수신
