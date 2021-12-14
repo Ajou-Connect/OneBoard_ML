@@ -61,7 +61,7 @@ while True:
     
     # print(" 자바 서버와 연결하는 코드는 현재 주석처리중 ")
     javaip = '115.85.182.194' # ip 주소
-    javaport = 8100 # port 번호
+    javaport = 8080 # port 번호
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.connect((javaip, javaport))
     print(" java 서버 포트번호 8080 와 연결 완료 \n\n\n")
@@ -96,7 +96,7 @@ while True:
                 send_msg('alarm')
                 now = datetime.datetime.now()
                 nowTime = now.strftime('%H:%M:%S')
-                print(nowTime)
+                # print(nowTime)
                 try:
                     msg = '딴짓 감지 ' + nowTime
                     testmsg = msg.encode()
@@ -127,7 +127,7 @@ while True:
                     send_msg("alarm")
                     now = datetime.datetime.now()
                     nowTime = now.strftime('%H:%M:%S')
-                    print(nowTime)
+                    # print(nowTime)
                     try:
                         msg = '딴짓 감지 ' + nowTime
                         testmsg = msg.encode()
