@@ -1,4 +1,4 @@
-from flask import Flask, Response, request  ## flask 라이브러리에서 Flask import
+from flask import Flask, Response, request, render_template, flash  ## flask 라이브러리에서 Flask import
 import imutils
 import cv2
 import socket
@@ -11,12 +11,12 @@ app = Flask(__name__)
 pygame.init()
 
 @app.route('/')
-def home():
-    return 'hello this is ML page'
+def index():
+    return render_template('index.html')
 
 
 @app.route('/facedetection')
-def index():
+def facedetection():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
@@ -32,7 +32,9 @@ def Recv(socket):
         msg = get_data.decode()
         print('Received from : ', msg)
         if msg == 'alarm':
+            # flash("test")
             sound()
+            # return render_template("index.html")
 
 def Send(socket, camera, encode_param):
     print(camera)
@@ -61,7 +63,14 @@ def gen_frames():
     t2.start()
     t1.start()
 
+    while True:
+        ret, image_o = camera.read()
+        ret, buffer = cv2.imencode('.jpg', image_o, encode_param)
+        frame = buffer.tobytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
 if __name__ == "__main__":
-    app.run(host = '0.0.0.0', port = 8100, debug=False, threaded=True)
+    app.run(host = '0.0.0.0', port = 8100, debug=True, threaded=True)
     # app.run(debug=True, threaded=True)
 # In[ ]:
