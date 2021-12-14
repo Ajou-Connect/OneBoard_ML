@@ -1,4 +1,4 @@
-from flask import Flask, Response, request, render_template, flash
+from flask import Flask, Response, request, render_template, flash, url_for
 import imutils
 import cv2
 import socket
@@ -30,7 +30,9 @@ def Recv(socket):
         msg = get_data.decode()
         print('Received from : ', msg)
         if msg == 'alarm':
+            detect = 'test'
             sound()
+            
 
 def Send(socket, camera, encode_param):
     while True:
